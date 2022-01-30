@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -177,8 +179,11 @@ public class SubCategoryFragment extends Fragment {
             params.put(Constant.SORT, filterBy);
         }
 
+
         ApiConfig.RequestToVolley((result, response) -> {
+
             if (result) {
+
                 try {
                     JSONObject jsonObject1 = new JSONObject(response);
                     if (!jsonObject1.getBoolean(Constant.ERROR)) {

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
@@ -234,6 +236,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void GetHomeData() {
+
         nestedScrollView.setVisibility(View.GONE);
         mShimmerViewContainer.setVisibility(View.VISIBLE);
         mShimmerViewContainer.startShimmer();
@@ -252,9 +255,12 @@ public class HomeFragment extends Fragment {
         ApiConfig.RequestToVolley((result, response) -> {
             if (result) {
                 try {
+
                     JSONObject jsonObject = new JSONObject(response);
+
                     if (!jsonObject.getBoolean(Constant.ERROR)) {
                         GetOfferImage(jsonObject.getJSONArray(Constant.OFFER_IMAGES));
+
                         GetCategory(jsonObject);
                         SectionProductRequest(jsonObject.getJSONArray(Constant.SECTIONS));
                         GetSlider(jsonObject.getJSONArray(Constant.SLIDER_IMAGES));
@@ -293,6 +299,7 @@ public class HomeFragment extends Fragment {
 
     void GetCategory(JSONObject object) {
         categoryArrayList = new ArrayList<>();
+
         try {
             int visible_count;
             int column_count;
@@ -321,6 +328,7 @@ public class HomeFragment extends Fragment {
                     categoryRecyclerView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
                     categoryRecyclerView.setAdapter(new CategoryAdapter(activity, categoryArrayList, R.layout.lyt_category_list, "home", 6));
                 }
+
             } else {
                 lytCategory.setVisibility(View.GONE);
             }

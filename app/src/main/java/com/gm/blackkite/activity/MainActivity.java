@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     TextView toolbarTitle;
 
     ImageView imageMenu, imageHome;
-    String frag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         from = getIntent().getStringExtra(Constant.FROM);
-        frag = getIntent().getStringExtra("frag");
         databaseHelper = new DatabaseHelper(activity);
 
         if (session.getBoolean(Constant.IS_USER_LOGIN)) {
@@ -122,99 +120,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         favoriteFragment = new FavoriteFragment();
         drawerFragment = new DrawerFragment();
 
-
         Bundle bundle = new Bundle();
-        if (frag != null && frag.equals("category")){
-            Constant.TOOLBAR_TITLE = getString(R.string.title_category);
-            invalidateOptionsMenu();
-
-            bottomNavigationView.setSelectedItemId(R.id.navCategory);
-
-            active = categoryFragment;
-            homeClicked = false;
-            drawerClicked = false;
-            favoriteClicked = false;
-            categoryClicked = true;
-            try {
-                if (!getIntent().getStringExtra("json").isEmpty()) {
-                    bundle.putString("json", getIntent().getStringExtra("json"));
-                }
-                homeFragment.setArguments(bundle);
-                fm.beginTransaction().add(R.id.container, categoryFragment).commit();
-            } catch (Exception e) {
-                fm.beginTransaction().add(R.id.container, categoryFragment).commit();
+        bottomNavigationView.setSelectedItemId(R.id.navMain);
+        active = homeFragment;
+        homeClicked = true;
+        drawerClicked = false;
+        favoriteClicked = false;
+        categoryClicked = false;
+        try {
+            if (!getIntent().getStringExtra("json").isEmpty()) {
+                bundle.putString("json", getIntent().getStringExtra("json"));
             }
-
-        }else if (frag != null && frag.equals("wish")){
-            Constant.TOOLBAR_TITLE = getString(R.string.title_fav);
-            invalidateOptionsMenu();
-
-            bottomNavigationView.setSelectedItemId(R.id.navWishList);
-
-            active = favoriteFragment;
-            homeClicked = false;
-            drawerClicked = false;
-            favoriteClicked = true;
-            categoryClicked = false;
-            try {
-                if (!getIntent().getStringExtra("json").isEmpty()) {
-                    bundle.putString("json", getIntent().getStringExtra("json"));
-                }
-                favoriteFragment.setArguments(bundle);
-                fm.beginTransaction().add(R.id.container, favoriteFragment).commit();
-            } catch (Exception e) {
-                fm.beginTransaction().add(R.id.container, favoriteFragment).commit();
-            }
-
+            homeFragment.setArguments(bundle);
+            fm.beginTransaction().add(R.id.container, homeFragment).commit();
+        } catch (Exception e) {
+            fm.beginTransaction().add(R.id.container, homeFragment).commit();
         }
-        else if (frag != null && frag.equals("profile")){
-            Constant.TOOLBAR_TITLE = getString(R.string.title_profile);
-            invalidateOptionsMenu();
-
-            bottomNavigationView.setSelectedItemId(R.id.navProfile);
-
-            active = drawerFragment;
-            homeClicked = false;
-            drawerClicked = true;
-            favoriteClicked = false;
-            categoryClicked = false;
-            try {
-                if (!getIntent().getStringExtra("json").isEmpty()) {
-                    bundle.putString("json", getIntent().getStringExtra("json"));
-                }
-                drawerFragment.setArguments(bundle);
-                fm.beginTransaction().add(R.id.container, drawerFragment).commit();
-            } catch (Exception e) {
-                fm.beginTransaction().add(R.id.container, drawerFragment).commit();
-            }
-
-        }
-        else {
-            if (session.getBoolean(Constant.IS_USER_LOGIN)) {
-                Constant.TOOLBAR_TITLE = getString(R.string.hi) + session.getData(Constant.NAME) + "!";
-            } else {
-                Constant.TOOLBAR_TITLE = getString(R.string.hi_user);
-            }
-            invalidateOptionsMenu();
-            bottomNavigationView.setSelectedItemId(R.id.navMain);
-
-            active = homeFragment;
-            homeClicked = true;
-            drawerClicked = false;
-            favoriteClicked = false;
-            categoryClicked = false;
-            try {
-                if (!getIntent().getStringExtra("json").isEmpty()) {
-                    bundle.putString("json", getIntent().getStringExtra("json"));
-                }
-                homeFragment.setArguments(bundle);
-                fm.beginTransaction().add(R.id.container, homeFragment).commit();
-            } catch (Exception e) {
-                fm.beginTransaction().add(R.id.container, homeFragment).commit();
-            }
-        }
-
-
 
         @SuppressLint("ResourceType") ColorStateList iconColorStates = new ColorStateList(
                 new int[][]{
@@ -245,17 +166,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 fm.beginTransaction().add(R.id.container, homeFragment).show(homeFragment).hide(active).commit();
                                 homeClicked = true;
                             } else {
-                                Intent intent = new Intent(MainActivity.this,MainActivity.class);
-                                intent.putExtra("frag","home");
-                                startActivity(intent);
                                 fm.beginTransaction().show(homeFragment).hide(active).commit();
                             }
                             active = homeFragment;
-                        }
-                        else {
-                            Intent intent = new Intent(MainActivity.this,MainActivity.class);
-                            intent.putExtra("frag","home");
-                            startActivity(intent);
                         }
                         break;
                     case R.id.navCategory:
@@ -267,17 +180,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 fm.beginTransaction().add(R.id.container, categoryFragment).show(categoryFragment).hide(active).commit();
                                 categoryClicked = true;
                             } else {
-                                Intent intent = new Intent(MainActivity.this,MainActivity.class);
-                                intent.putExtra("frag","category");
-                                startActivity(intent);
                                 fm.beginTransaction().show(categoryFragment).hide(active).commit();
                             }
                             active = categoryFragment;
-                        }
-                        else {
-                            Intent intent = new Intent(MainActivity.this,MainActivity.class);
-                            intent.putExtra("frag","category");
-                            startActivity(intent);
                         }
                         break;
                     case R.id.navWishList:
@@ -289,17 +194,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 fm.beginTransaction().add(R.id.container, favoriteFragment).show(favoriteFragment).hide(active).commit();
                                 favoriteClicked = true;
                             } else {
-                                Intent intent = new Intent(MainActivity.this,MainActivity.class);
-                                intent.putExtra("frag","wish");
-                                startActivity(intent);
                                 fm.beginTransaction().show(favoriteFragment).hide(active).commit();
                             }
                             active = favoriteFragment;
-                        }
-                        else {
-                            Intent intent = new Intent(MainActivity.this,MainActivity.class);
-                            intent.putExtra("frag","wish");
-                            startActivity(intent);
                         }
                         break;
                     case R.id.navProfile:
@@ -311,17 +208,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 fm.beginTransaction().add(R.id.container, drawerFragment).show(drawerFragment).hide(active).commit();
                                 drawerClicked = true;
                             } else {
-                                Intent intent = new Intent(MainActivity.this,MainActivity.class);
-                                intent.putExtra("frag","profile");
-                                startActivity(intent);
                                 fm.beginTransaction().show(drawerFragment).hide(active).commit();
                             }
                             active = drawerFragment;
-                        }
-                        else {
-                            Intent intent = new Intent(MainActivity.this,MainActivity.class);
-                            intent.putExtra("frag","profile");
-                            startActivity(intent);
                         }
                         break;
                 }
@@ -489,7 +378,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         if (fm.getBackStackEntryCount() > 0) {
             toolbarTitle.setText(Constant.TOOLBAR_TITLE);
-            //bottomNavigationView.setVisibility(View.GONE);
+            bottomNavigationView.setVisibility(View.GONE);
 
             cardViewHamburger.setCardBackgroundColor(getColor(R.color.colorPrimaryLight));
             imageMenu.setOnClickListener(v -> fm.popBackStack());
