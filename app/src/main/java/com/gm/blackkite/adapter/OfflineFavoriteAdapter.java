@@ -107,13 +107,13 @@ public class OfflineFavoriteAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 holder.spinner.setVisibility(View.INVISIBLE);
                 holder.lytSpinner.setVisibility(View.INVISIBLE);
             }
-            if (!product.getIndicator().equals("0")) {
-                holder.imgIndicator.setVisibility(View.VISIBLE);
-                if (product.getIndicator().equals("1"))
-                    holder.imgIndicator.setImageResource(R.drawable.ic_veg_icon);
-                else if (product.getIndicator().equals("2"))
-                    holder.imgIndicator.setImageResource(R.drawable.ic_non_veg_icon);
-            }
+//            if (!product.getIndicator().equals("0")) {
+//                holder.imgIndicator.setVisibility(View.VISIBLE);
+//                if (product.getIndicator().equals("1"))
+//                    holder.imgIndicator.setImageResource(R.drawable.ic_veg_icon);
+//                else if (product.getIndicator().equals("2"))
+//                    holder.imgIndicator.setImageResource(R.drawable.ic_non_veg_icon);
+//            }
             holder.productName.setText(Html.fromHtml(product.getName()));
 
             Picasso.get()

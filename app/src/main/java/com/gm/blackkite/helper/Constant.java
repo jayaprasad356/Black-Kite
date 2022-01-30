@@ -5,13 +5,13 @@ import java.util.HashMap;
 public class Constant {
     //MODIFICATION PART
 
-    public static final String MainBaseUrl = "https://admin.drive2mart.com/"; //Admin panel url
-    //public static final String MainBaseUrl = "http://192.168.43.122/Drive2mart/"; //Admin panel url
+    //public static final String MainBaseUrl = "https://admin.drive2mart.com/"; //Admin panel url
+    public static final String MainBaseUrl = "http://192.168.43.122/blackkite/"; //Admin panel url
 
-    public static final String WebSiteUrl = "https://ecartmultivendorweb.thewrteam.in/"; //Admin panel url
+    public static final String WebSiteUrl = ""; //Admin panel url
 
     //set your jwt secret key here...key must same in PHP and Android
-    public static final String JWT_KEY = "drive2mart0111";
+    public static final String JWT_KEY = "black_kite";
 
     public static final int GRID_COLUMN = 3; //Category View Number Of Grid Per Line
 

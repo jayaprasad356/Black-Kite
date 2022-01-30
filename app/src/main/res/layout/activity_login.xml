@@ -21,11 +21,11 @@
         android:id="@+id/imgLogo"
         android:layout_width="wrap_content"
         android:layout_height="170dp"
-        android:layout_marginTop="@dimen/_20sdp"
         android:layout_below="@id/toolbar"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/logo" />
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:src="@drawable/black_kite_circle" />
 
     <!--Login lyt-->
     <ScrollView

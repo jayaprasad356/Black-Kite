@@ -518,13 +518,13 @@ public class ProductDetailFragment extends Fragment {
                 SetSelectedData(product.getPriceVariations().get(0));
             }
 
-            if (!product.getIndicator().equals("0")) {
-                imgIndicator.setVisibility(View.VISIBLE);
-                if (product.getIndicator().equals("1"))
-                    imgIndicator.setImageResource(R.drawable.ic_veg_icon);
-                else if (product.getIndicator().equals("2"))
-                    imgIndicator.setImageResource(R.drawable.ic_non_veg_icon);
-            }
+//            if (!product.getIndicator().equals("0")) {
+//                imgIndicator.setVisibility(View.VISIBLE);
+//                if (product.getIndicator().equals("1"))
+//                    imgIndicator.setImageResource(R.drawable.ic_veg_icon);
+//                else if (product.getIndicator().equals("2"))
+//                    imgIndicator.setImageResource(R.drawable.ic_non_veg_icon);
+//            }
             CustomAdapter customAdapter = new CustomAdapter();
             spinner.setAdapter(customAdapter);
 
