@@ -5,7 +5,7 @@ apply plugin: 'com.google.firebase.crashlytics'
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "d2m.drive2mart.shop"
+        applicationId "com.gm.blackkite"
         minSdkVersion 27
         targetSdkVersion 30
         versionCode 1
