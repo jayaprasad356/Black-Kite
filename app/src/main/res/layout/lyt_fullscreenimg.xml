@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <d2m.drive2mart.shop.ui.TouchImageView
+    <com.gm.blackkite.ui.TouchImageView
         android:id="@+id/imgSlider"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
