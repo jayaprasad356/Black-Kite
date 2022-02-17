@@ -3,10 +3,8 @@ package com.gm.blackkite.helper;
 import java.util.HashMap;
 
 public class Constant {
-    //MODIFICATION PART
-
-    //public static final String MainBaseUrl = "https://admin.drive2mart.com/"; //Admin panel url
-    public static final String MainBaseUrl = "http://192.168.43.122/blackkite/"; //Admin panel url
+    //public static final String MainBaseUrl = "http://192.168.43.122/blackkite/"; //Admin panel url
+    public static final String MainBaseUrl = "http://admin.blackkite.site/"; //Admin panel url
 
     public static final String WebSiteUrl = ""; //Admin panel url
 

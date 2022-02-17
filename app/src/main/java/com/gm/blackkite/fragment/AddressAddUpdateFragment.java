@@ -435,6 +435,7 @@ public class AddressAddUpdateFragment extends Fragment implements OnMapReadyCall
             } else if (For.equalsIgnoreCase("update")) {
                 params.put(Constant.UPDATE_ADDRESS, Constant.GetVal);
                 params.put(Constant.ID, address1.getId());
+
             }
 
             params.put(Constant.USER_ID, session.getData(Constant.ID));
@@ -459,10 +460,12 @@ public class AddressAddUpdateFragment extends Fragment implements OnMapReadyCall
             }
             params.put(Constant.IS_DEFAULT, isDefault);
 
+
             ApiConfig.RequestToVolley((result, response) -> {
 
                 if (result) {
                     try {
+
 
                         String msg;
                         JSONObject jsonObject = new JSONObject(response);

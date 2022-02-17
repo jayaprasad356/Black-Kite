@@ -168,20 +168,21 @@ public class SubCategoryFragment extends Fragment {
 
     @SuppressLint("NotifyDataSetChanged")
     void GetProducts() {
+
         startShimmer();
         productArrayList = new ArrayList<>();
         Map<String, String> params = new HashMap<>();
         params.put(Constant.CATEGORY_ID, id);
-        params.put(Constant.USER_ID, session.getData(Constant.ID));
+        params.put(Constant.GET_ALL_PRODUCTS, Constant.GetVal);
+        if (session.getBoolean(Constant.IS_USER_LOGIN)) {
+            params.put(Constant.USER_ID, session.getData(Constant.ID));
+        }
         params.put(Constant.LIMIT, "" + Constant.LOAD_ITEM_LIMIT);
         params.put(Constant.OFFSET, "" + offset);
         if (filterIndex != -1) {
             params.put(Constant.SORT, filterBy);
         }
-
-
         ApiConfig.RequestToVolley((result, response) -> {
-
             if (result) {
 
                 try {
