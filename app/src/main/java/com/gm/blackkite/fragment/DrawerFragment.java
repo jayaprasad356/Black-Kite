@@ -108,8 +108,8 @@ public class DrawerFragment extends Fragment {
                     .load("-")
                     .fit()
                     .centerInside()
-                    .placeholder(R.drawable.black_kite_circle)
-                    .error(R.drawable.black_kite_circle)
+                    .placeholder(R.drawable.bk_circle)
+                    .error(R.drawable.bk_circle)
                     .transform(new RoundedCornersTransformation(20, 0))
                     .into(imgProfile);
 

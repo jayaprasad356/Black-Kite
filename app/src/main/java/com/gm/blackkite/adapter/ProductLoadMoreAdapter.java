@@ -311,6 +311,7 @@ public class ProductLoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             holder.tvStatus.setVisibility(View.GONE);
             holder.qtyLyt.setVisibility(View.VISIBLE);
         }
+        holder.qtyLyt.setVisibility(View.GONE);
 
         if (isLogin) {
             if (Constant.CartValues.containsKey(extra.getId())) {

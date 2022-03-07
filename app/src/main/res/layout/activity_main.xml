@@ -29,6 +29,19 @@
         app:elevation="0dp"
         app:itemTextAppearanceActive="@style/BottomNavigation.ActiveItemTextAppearance"
         app:menu="@menu/navigation" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_55sdp"
+        android:contentDescription="fab"
+        app:maxImageSize="56dp"
+        app:srcCompat="@drawable/wh"/>
+
 
 
 </RelativeLayout>

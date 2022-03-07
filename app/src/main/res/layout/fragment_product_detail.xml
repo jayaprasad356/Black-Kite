@@ -210,6 +210,10 @@
                         android:textColor="@color/black" />
 
                 </RelativeLayout>
+                <WebView
+                    android:id="@+id/txtDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <RelativeLayout
                     android:id="@+id/lytMainPrice"
@@ -338,6 +342,7 @@
                     </LinearLayout>
 
                 </RelativeLayout>
+
 
 
                 <RelativeLayout
@@ -570,10 +575,7 @@
 
                 </LinearLayout>
 
-                <WebView
-                    android:id="@+id/txtDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+
 
             </LinearLayout>
 
