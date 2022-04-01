@@ -103,6 +103,7 @@ public class SubCategoryFragment extends Fragment {
             swipeLayout.setRefreshing(false);
             GetCategory();
             GetProducts();
+            Log.d("OFFSET_COUNT_SWIPE",""+offset);
         });
 
         return root;
@@ -184,7 +185,6 @@ public class SubCategoryFragment extends Fragment {
         }
         ApiConfig.RequestToVolley((result, response) -> {
             if (result) {
-
                 try {
                     JSONObject jsonObject1 = new JSONObject(response);
                     if (!jsonObject1.getBoolean(Constant.ERROR)) {
@@ -216,24 +216,32 @@ public class SubCategoryFragment extends Fragment {
                                                 productArrayList.add(null);
                                                 productLoadMoreAdapter.notifyItemInserted(productArrayList.size() - 1);
 
+
                                                 offset += Integer.parseInt("" + Constant.LOAD_ITEM_LIMIT);
                                                 Map<String, String> params1 = new HashMap<>();
                                                 params1.put(Constant.CATEGORY_ID, id);
                                                 params1.put(Constant.USER_ID, session.getData(Constant.ID));
                                                 params1.put(Constant.LIMIT, "" + Constant.LOAD_ITEM_LIMIT);
+                                                params1.put(Constant.GET_ALL_PRODUCTS, Constant.GetVal);
                                                 params1.put(Constant.OFFSET, offset + "");
                                                 if (filterIndex != -1) {
                                                     params1.put(Constant.SORT, filterBy);
                                                 }
                                                 ApiConfig.RequestToVolley((result1, response1) -> {
+
                                                     if (result1) {
                                                         try {
+
+
                                                             productArrayList.remove(productArrayList.size() - 1);
                                                             productLoadMoreAdapter.notifyItemRemoved(productArrayList.size());
                                                             JSONObject jsonObject11 = new JSONObject(response1);
+
                                                             if (!jsonObject11.getBoolean(Constant.ERROR)) {
                                                                 JSONObject object1 = new JSONObject(response1);
                                                                 JSONArray jsonArray1 = object1.getJSONArray(Constant.DATA);
+
+
                                                                 try {
                                                                     for (int i = 0; i < jsonArray1.length(); i++) {
                                                                         Product product = new Gson().fromJson(jsonArray1.getJSONObject(i).toString(), Product.class);
@@ -250,6 +258,7 @@ public class SubCategoryFragment extends Fragment {
                                                             }
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();
+
                                                         }
                                                     }
                                                 }, activity, Constant.GET_PRODUCTS_URL, params1, false);
