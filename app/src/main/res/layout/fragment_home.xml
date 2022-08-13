@@ -199,9 +199,9 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/categoryRecycleView"
-                        android:layout_below="@id/tvTitleCategory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/tvTitleCategory"
                         android:layout_marginStart="@dimen/dimen_5dp"
                         android:layout_marginEnd="@dimen/dimen_5dp"
                         android:background="@color/bg_color" />

@@ -37,6 +37,7 @@
         android:ellipsize="end"
         android:gravity="center"
         android:lines="1"
+        android:visibility="invisible"
         android:padding="@dimen/_5sdp"
         android:textColor="@color/black"
         android:textSize="@dimen/_12ssp" />
