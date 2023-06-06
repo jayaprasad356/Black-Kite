@@ -210,10 +210,6 @@
                         android:textColor="@color/black" />
 
                 </RelativeLayout>
-                <WebView
-                    android:id="@+id/txtDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
 
                 <RelativeLayout
                     android:id="@+id/lytMainPrice"
@@ -344,7 +340,6 @@
                 </RelativeLayout>
 
 
-
                 <RelativeLayout
                     android:id="@+id/lytQuantity"
                     android:layout_width="match_parent"
@@ -422,7 +417,6 @@
                 </RelativeLayout>
 
                 <TextView
-                    android:visibility="gone"
                     android:id="@+id/tvPinCode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -575,7 +569,10 @@
 
                 </LinearLayout>
 
-
+                <WebView
+                    android:id="@+id/txtDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -631,7 +628,7 @@
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                android:background="@color/bg_color"
+                    android:background="@color/bg_color"
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

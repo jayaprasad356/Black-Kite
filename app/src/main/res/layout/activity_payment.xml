@@ -191,6 +191,19 @@
                     android:textAlignment="viewStart"
                     android:divider="@color/light_gray"
                     android:showDividers="middle">
+                    <RadioButton
+                        android:id="@+id/rbUPI"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:button="@drawable/ic_radio_button"
+                        android:drawableEnd="@drawable/ic_cod"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:padding="@dimen/_5sdp"
+                        android:tag="@string/upi"
+                        android:textAlignment="viewStart"
+                        android:text="Pay via UPI"
+                        android:textSize="@dimen/_12sdp"
+                        />
 
                     <RadioButton
                         android:id="@+id/rbCOD"

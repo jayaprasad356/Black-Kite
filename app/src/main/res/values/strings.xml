@@ -139,6 +139,7 @@
     <string name="razor_payment">RazorPay</string>
     <string name="razor_pay">RazorPay</string>
     <string name="pay_u">PayUMoney</string>
+    <string name="upi">upi</string>
     <string name="paypal">PayPal</string>
     <string name="resend">Resend OTP</string>
     <string name="verify_message">Verify your registered number and reset your password. </string>

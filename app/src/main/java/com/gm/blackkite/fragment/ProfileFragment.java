@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -407,8 +408,10 @@ public class ProfileFragment extends Fragment {
         params.put(Constant.USER_ID, session.getData(Constant.ID));
         fileParams.put(Constant.PROFILE, filePath);
         params.put(Constant.TYPE, Constant.UPLOAD_PROFILE);
+        Log.d("PROFILEFRAGIMAGE",filePath);
 
         ApiConfig.RequestToVolley((result, response) -> {
+            Toast.makeText(activity, response, Toast.LENGTH_SHORT).show();
             if (result) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
@@ -437,6 +440,6 @@ public class ProfileFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
-        }, activity, Constant.REGISTER_URL, params, fileParams);
+        }, activity, "http://192.168.43.38/bigwigg/api/update_profile.php", params, fileParams);
     }
 }

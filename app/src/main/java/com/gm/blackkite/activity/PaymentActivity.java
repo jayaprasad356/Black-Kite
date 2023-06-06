@@ -41,6 +41,9 @@ import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 import com.razorpay.Checkout;
+import com.shreyaspatil.EasyUpiPayment.EasyUpiPayment;
+import com.shreyaspatil.EasyUpiPayment.listener.PaymentStatusListener;
+import com.shreyaspatil.EasyUpiPayment.model.TransactionDetails;
 import com.sslcommerz.library.payment.model.datafield.MandatoryFieldModel;
 import com.sslcommerz.library.payment.model.dataset.TransactionInfo;
 import com.sslcommerz.library.payment.model.util.CurrencyType;
@@ -57,9 +60,11 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -76,7 +81,7 @@ import com.gm.blackkite.model.Slot;
 
 import static com.gm.blackkite.helper.ApiConfig.createJWT;
 
-public class PaymentActivity extends AppCompatActivity  implements PaytmPaymentTransactionCallback {
+public class PaymentActivity extends AppCompatActivity  implements PaytmPaymentTransactionCallback, PaymentStatusListener {
     public static final String TAG = CheckoutFragment.class.getSimpleName();
     public static String customerId;
     public static String razorPayId;
@@ -93,7 +98,7 @@ public class PaymentActivity extends AppCompatActivity  implements PaytmPaymentT
     public ArrayList<String> variantIdList, qtyList, dateList;
     TextView tvSubTotal, tvTotalItems, tvSelectDeliveryDate, tvWltBalance, tvProceedOrder, tvConfirmOrder, tvPayment, tvDelivery;
     double subtotal = 0.0, usedBalance = 0.0, pCodeDiscount = 0.0;
-    RadioButton rbCOD, rbPayU, rbPayPal, rbRazorPay, rbPayStack, rbFlutterWave, rbMidTrans, rbStripe, rbPayTm, rbSslCommerz;
+    RadioButton rbCOD,rbUPI, rbPayU, rbPayPal, rbRazorPay, rbPayStack, rbFlutterWave, rbMidTrans, rbStripe, rbPayTm, rbSslCommerz;
     ArrayList<BookingDate> bookingDates;
     RelativeLayout confirmLyt, lytWallet;
     RecyclerView recyclerViewDates;
@@ -219,6 +224,7 @@ public class PaymentActivity extends AppCompatActivity  implements PaytmPaymentT
         rbPayStack = findViewById(R.id.rbPayStack);
         rbFlutterWave = findViewById(R.id.rbFlutterWave);
         rbCOD = findViewById(R.id.rbCOD);
+        rbUPI = findViewById(R.id.rbUPI);
         lytPayment = findViewById(R.id.lytPayment);
         rbPayU = findViewById(R.id.rbPayU);
         rbPayPal = findViewById(R.id.rbPayPal);
@@ -252,7 +258,6 @@ public class PaymentActivity extends AppCompatActivity  implements PaytmPaymentT
     }
 
     public void GetPaymentConfig() {
-        Log.d("TOKEN",createJWT("eKart", "eKart Authentication"));
         recyclerView.setVisibility(View.GONE);
         mShimmerViewContainer.setVisibility(View.VISIBLE);
         mShimmerViewContainer.startShimmer();
@@ -266,7 +271,6 @@ public class PaymentActivity extends AppCompatActivity  implements PaytmPaymentT
                     if (!jsonObject.getBoolean(Constant.ERROR)) {
                         if (jsonObject.has(Constant.PAYMENT_METHODS)) {
                             JSONObject object = jsonObject.getJSONObject(Constant.PAYMENT_METHODS);
-                            Log.d("CODelivery",object.getString(Constant.cod_payment_method));
                             if (object.has(Constant.cod_payment_method)) {
                                 Constant.COD = object.getString(Constant.cod_payment_method);
                                 Constant.COD_MODE = object.getString(Constant.cod_mode);
@@ -620,7 +624,20 @@ public class PaymentActivity extends AppCompatActivity  implements PaytmPaymentT
                 dialog.dismiss();
             } else {
                 sendParams.put(Constant.USER_NAME, session.getData(Constant.NAME));
-                if (paymentMethod.equals(getString(R.string.pay_u))) {
+                if (paymentMethod.equals(getString(R.string.upi))) {
+                    dialog.dismiss();
+                    try {
+                        Date c = Calendar.getInstance().getTime();
+                        SimpleDateFormat df = new SimpleDateFormat("ddMMyyyyHHmmss", Locale.getDefault());
+                        String transcId = df.format(c);
+                        makePayment(""+Double.parseDouble(""+Math.round(subtotal)), "Q688253183@ybl", session.getData(Constant.NAME), "order", transcId);
+                    }catch (Exception e){
+                        Log.d("PAYMENT_GATEWAY",e.getMessage());
+
+                    }
+
+                }
+                else  if (paymentMethod.equals(getString(R.string.pay_u))) {
                     dialog.dismiss();
                     sendParams.put(Constant.MOBILE, session.getData(Constant.MOBILE));
                     sendParams.put(Constant.USER_NAME, session.getData(Constant.NAME));
@@ -665,6 +682,33 @@ public class PaymentActivity extends AppCompatActivity  implements PaytmPaymentT
 
         tvDialogCancel.setOnClickListener(v -> dialog.dismiss());
         dialog.show();
+    }
+    private void makePayment(String amount, String upi, String name, String desc, String transactionId) {
+        // on below line we are calling an easy payment method and passing
+        // all parameters to it such as upi id,name, description and others.
+        final EasyUpiPayment easyUpiPayment = new EasyUpiPayment.Builder()
+                .with(this)
+                // on below line we are adding upi id.
+                .setPayeeVpa(upi)
+                // on below line we are setting name to which we are making oayment.
+                .setPayeeName(name)
+                // on below line we are passing transaction id.
+                .setTransactionId(transactionId)
+                // on below line we are passing transaction ref id.
+                .setTransactionRefId(transactionId)
+                // on below line we are adding description to payment.
+                .setDescription(desc)
+                // on below line we are passing amount which is being paid.
+                .setAmount(amount)
+                // on below line we are calling a build method to build this ui.
+                .build();
+        // on below line we are calling a start
+        // payment method to start a payment.
+        easyUpiPayment.startPayment();
+
+        // on below line we are calling a set payment
+        // status listener method to call other payment methods.
+        easyUpiPayment.setPaymentStatusListener(this);
     }
 
     public void startSslCommerzPayment(Activity activit, String amount, String transId, Map<String, String> sendParams) {
@@ -973,6 +1017,7 @@ public class PaymentActivity extends AppCompatActivity  implements PaytmPaymentT
 
                     paramMap.put(Constant.CALLBACK_URL, object.getString(Constant.CALLBACK_URL));
                     paramMap.put(Constant.CHECKSUMHASH, jsonObject.getString("signature"));
+                    Log.d("PAY_HASH", Arrays.asList(paramMap) + "");
 
                     //creating a paytm order object using the hashmap
                     PaytmOrder order = new PaytmOrder(paramMap);
@@ -1140,5 +1185,45 @@ public class PaymentActivity extends AppCompatActivity  implements PaytmPaymentT
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onTransactionCompleted(TransactionDetails transactionDetails) {
+
+    }
+
+    @Override
+    public void onTransactionSuccess() {
+        payviaUpiAmount();
+        PlaceOrder(activity, getString(R.string.midtrans), System.currentTimeMillis() + Constant.randomNumeric(3), true, sendParams, "upi");
+
+    }
+
+    private void payviaUpiAmount() {
+    }
+
+    @Override
+    public void onTransactionSubmitted() {
+
+    }
+
+    @Override
+    public void onTransactionFailed() {
+
+    }
+
+    @Override
+    public void onTransactionCancelled() {
+
+    }
+
+    @Override
+    public void onAppNotFound() {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
     }
 }
