@@ -39,6 +39,7 @@
         android:ellipsize="end"
         android:gravity="center"
         android:lines="1"
+        android:visibility="invisible"
         android:paddingStart="@dimen/dimen_5dp"
         android:paddingEnd="@dimen/dimen_5dp"
         android:textColor="@color/black"
