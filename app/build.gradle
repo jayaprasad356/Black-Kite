@@ -5,7 +5,7 @@ apply plugin: 'com.google.firebase.crashlytics'
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "com.gm.jaswik"
+        applicationId "com.gm.moderna"
         minSdkVersion 27
         targetSdkVersion 30
         versionCode 2
